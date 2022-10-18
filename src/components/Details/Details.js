@@ -1,20 +1,29 @@
+import { useEffect, useId, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+
+import * as gameService from '../../services/gameService';
+
 export const Details = () => {
+    const { gameId } = useParams();
+    const [currentGame, setCurrentGame] = useState({});
+
+    useEffect(() => {
+        gameService.getOne(gameId)
+        .then(result => setCurrentGame(result))
+    }, []);
+
     return (
         <section id="game-details">
             <h1>Game Details</h1>
             <div className="info-section">
                 <div className="game-header">
-                    <img className="game-img" src="images/MineCraft.png" />
+                    <img className="game-img" src={currentGame.imageUrl} />
                     <h1>Bright</h1>
-                    <span className="levels">MaxLevel: 4</span>
-                    <p className="type">Action, Crime, Fantasy</p>
+                    <span className="levels">MaxLevel: {currentGame.maxLevel}</span>
+                    <p className="type">{currentGame.category}</p>
                 </div>
                 <p className="text">
-                    Set in a world where fantasy creatures live side by side with humans. A
-                    human cop is forced to work with an Orc to find a weapon everyone is
-                    prepared to kill for. Set in a world where fantasy creatures live side by
-                    side with humans. A human cop is forced to work with an Orc to find a
-                    weapon everyone is prepared to kill for.
+                    {currentGame.summary}
                 </p>
                 {/* Bonus ( for Guests and Users ) */}
                 <div className="details-comments">
@@ -33,12 +42,12 @@ export const Details = () => {
                 </div>
                 {/* Edit/Delete buttons ( Only for creator of this game )  */}
                 <div className="buttons">
-                    <a href="#" className="button">
+                    <Link to={`/edit/${currentGame._id}`} className="button">
                         Edit
-                    </a>
-                    <a href="#" className="button">
+                    </Link>
+                    <Link to="#" className="button">
                         Delete
-                    </a>
+                    </Link>
                 </div>
             </div>
             {/* Bonus */}

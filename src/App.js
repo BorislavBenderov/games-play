@@ -32,8 +32,8 @@ function App() {
                     <Route path="/create" element={<Create />}/>
                     <Route path="/register" element={<Register />}/>
                     <Route path="/login" element={<Login />}/>
-                    <Route path="/details/:id" element={<Details />}/>
-                    <Route path="/edit/:id" element={<Edit />}/>
+                    <Route path="/details/:gameId" element={<Details />}/>
+                    <Route path="/edit/:gameId" element={<Edit />}/>
                 </Routes>
             </main>
             </GameContext.Provider>
