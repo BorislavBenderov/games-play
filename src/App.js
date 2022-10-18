@@ -9,12 +9,22 @@ import { Register } from './components/Register/Register';
 import { Login } from './components/Login/Login';
 import { Details } from './components/Details/Details';
 import { Edit } from './components/Edit/Edit';
+import { useEffect, useState } from 'react';
+import * as gameService from './services/gameService';
 
 function App() {
+    const [games, setGames] = useState([]);
+
+    useEffect(() => {
+        gameService.getAll()
+        .then(result => setGames(Object.values(result)))
+    }, []);
+
+
     return (
         <div className="App">
             <Header />
-            <GameContext.Provider>
+            <GameContext.Provider value={{ games }}>
             <main id="main-content">
                 <Routes>
                     <Route path="/" element={<Home />}/>
