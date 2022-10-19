@@ -27,8 +27,15 @@ function App() {
         setAuth(authData);
     }
 
+    const onCreate = (newGame) => {
+        setGames(oldGames => [
+            ...oldGames,
+            newGame
+        ])
+    }
+
     return (
-        <AuthContext.Provider value={{ auth, onLogin }}>
+        <AuthContext.Provider value={{ auth, onLogin, onCreate }}>
         <div className="App">
             <Header />
             <GameContext.Provider value={{ games }}>
