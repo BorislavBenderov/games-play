@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { GameContext } from './contexts/GameContext';
+import { AuthContext } from './contexts/AuthContext';
 
 import { Header } from "./components/Header/Header";
 import { Home } from "./components/Home/Home";
@@ -11,17 +12,23 @@ import { Details } from './components/Details/Details';
 import { Edit } from './components/Edit/Edit';
 import { useEffect, useState } from 'react';
 import * as gameService from './services/gameService';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 function App() {
     const [games, setGames] = useState([]);
+    const [auth, setAuth] = useLocalStorage('auth', {});
 
     useEffect(() => {
         gameService.getAll()
         .then(result => setGames(Object.values(result)))
     }, []);
 
+    const onLogin = (authData) => {
+        setAuth(authData);
+    }
 
     return (
+        <AuthContext.Provider value={{ auth, onLogin }}>
         <div className="App">
             <Header />
             <GameContext.Provider value={{ games }}>
@@ -38,6 +45,7 @@ function App() {
             </main>
             </GameContext.Provider>
         </div>
+        </AuthContext.Provider>
     );
 }
 
