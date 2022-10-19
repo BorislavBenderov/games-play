@@ -1,6 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
 import { GameContext } from './contexts/GameContext';
 import { AuthContext } from './contexts/AuthContext';
+import { useEffect, useState } from 'react';
+import * as gameService from './services/gameService';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 import { Header } from "./components/Header/Header";
 import { Home } from "./components/Home/Home";
@@ -10,9 +13,8 @@ import { Register } from './components/Register/Register';
 import { Login } from './components/Login/Login';
 import { Details } from './components/Details/Details';
 import { Edit } from './components/Edit/Edit';
-import { useEffect, useState } from 'react';
-import * as gameService from './services/gameService';
-import { useLocalStorage } from './hooks/useLocalStorage';
+import { Logout } from './components/Logout/Logout';
+
 
 function App() {
     const [games, setGames] = useState([]);
@@ -27,6 +29,10 @@ function App() {
         setAuth(authData);
     }
 
+    const onLogout = () => {
+        setAuth({});
+    }
+
     const onCreate = (newGame) => {
         setGames(oldGames => [
             ...oldGames,
@@ -35,7 +41,7 @@ function App() {
     }
 
     return (
-        <AuthContext.Provider value={{ auth, onLogin, onCreate }}>
+        <AuthContext.Provider value={{ auth, onLogin, onLogout, onCreate }}>
         <div className="App">
             <Header />
             <GameContext.Provider value={{ games }}>
@@ -46,6 +52,7 @@ function App() {
                     <Route path="/create" element={<Create />}/>
                     <Route path="/register" element={<Register />}/>
                     <Route path="/login" element={<Login />}/>
+                    <Route path="/logout" element={<Logout />}/>
                     <Route path="/details/:gameId" element={<Details />}/>
                     <Route path="/edit/:gameId" element={<Edit />}/>
                 </Routes>

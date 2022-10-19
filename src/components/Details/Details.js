@@ -18,7 +18,7 @@ export const Details = () => {
             <div className="info-section">
                 <div className="game-header">
                     <img className="game-img" src={currentGame.imageUrl} />
-                    <h1>Bright</h1>
+                    <h1>{currentGame.title}</h1>
                     <span className="levels">MaxLevel: {currentGame.maxLevel}</span>
                     <p className="type">{currentGame.category}</p>
                 </div>
