@@ -40,11 +40,15 @@ function App() {
         ])
     }
 
+    const onEdit = (gameId, gamedata) => {
+        setGames(state => state.map(x => x._id === gameId ? gamedata : x));
+    }
+
     return (
-        <AuthContext.Provider value={{ auth, onLogin, onLogout, onCreate }}>
+        <AuthContext.Provider value={{ auth, onLogin, onLogout }}>
         <div className="App">
             <Header />
-            <GameContext.Provider value={{ games }}>
+            <GameContext.Provider value={{ games, onCreate, onEdit }}>
             <main id="main-content">
                 <Routes>
                     <Route path="/" element={<Home />}/>

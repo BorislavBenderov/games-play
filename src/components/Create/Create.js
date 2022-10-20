@@ -1,11 +1,11 @@
 import { useState, useContext } from "react";
 import * as gameService from '../../services/gameService';
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthContext";
+import { GameContext } from "../../contexts/GameContext";
 
 export const Create = () => {
     const navigate = useNavigate();
-    const { onCreate } = useContext(AuthContext);
+    const { onCreate } = useContext(GameContext);
 
     const onSubmit = (e) => {
         e.preventDefault();
