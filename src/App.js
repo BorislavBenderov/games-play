@@ -24,7 +24,7 @@ function App() {
         gameService.getAll()
         .then(result => setGames(Object.values(result)))
     }, []);
-
+    
     const onLogin = (authData) => {
         setAuth(authData);
     }
