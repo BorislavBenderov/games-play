@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import * as gameService from '../../services/gameService';
 import { useNavigate } from "react-router-dom";
 import { GameContext } from "../../contexts/GameContext";
