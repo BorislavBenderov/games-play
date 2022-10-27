@@ -44,11 +44,15 @@ function App() {
         setGames(state => state.map(x => x._id === gameId ? gamedata : x));
     }
 
+    const onDelete = (gameId) => {
+        setGames(state => state.filter(x => x._id !== gameId));
+    }
+
     return (
         <AuthContext.Provider value={{ auth, onLogin, onLogout }}>
         <div className="App">
             <Header />
-            <GameContext.Provider value={{ games, onCreate, onEdit }}>
+            <GameContext.Provider value={{ games, onCreate, onEdit, onDelete }}>
             <main id="main-content">
                 <Routes>
                     <Route path="/" element={<Home />}/>

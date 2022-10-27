@@ -1,11 +1,14 @@
 import { useEffect, useState, useContext } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
+import { GameContext } from '../../contexts/GameContext';
 
 import * as gameService from '../../services/gameService';
 
 export const Details = () => {
+    const navigate = useNavigate();
     const { auth } = useContext(AuthContext);
+    const { onDelete } = useContext(GameContext);
     const { gameId } = useParams();
     const [currentGame, setCurrentGame] = useState({});
 
@@ -15,6 +18,18 @@ export const Details = () => {
     }, [gameId]);
 
     const isOwner = auth._id === currentGame._ownerId;
+
+    const deleteHanlder = () => {
+        const confirmation = window.confirm('Are you sure you want to delete this game?');
+
+        if (confirmation) {
+            gameService.remove(gameId)
+            .then(() => {
+                onDelete(gameId);
+                navigate('/catalog');
+            })
+        }
+    }
 
     return (
         <section id="game-details">
@@ -50,9 +65,9 @@ export const Details = () => {
                         <Link to={`/edit/${currentGame._id}`} className="button">
                             Edit
                         </Link>
-                        <Link to="#" className="button">
+                        <button onClick={deleteHanlder} className="button">
                             Delete
-                        </Link>
+                        </button>
                     </div>
                     : ''}
             </div>
